@@ -15,12 +15,19 @@ func main() {
 	fmt.Println("Before marshalling: ", t.String())
 
 	mdata, err := asn1.Marshal(t)
-
+        ckErr(err)
+        fmt.Println("Marshall ok!")
+        
+        var newtime = new(time.Time)
+        _, err1 := asn1.Unmarshal(mdata, newtime)
+        ckErr(err1)
+        fmt.Println("After marshal/unmarshal: ", newtime.String())
+        
 }
 
-func chkError(err error) {
+func ckErr(err error) {
 	if err != nil {
-		fmt.Println("Fatal error ", error.Error())
+		fmt.Println("Fatal error ", err.Error())
+                os.Exit(1)
 	}
-	os.Exit(1)
 }
